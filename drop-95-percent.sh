@@ -1,6 +1,6 @@
 #!/bin/sh
-# Script to achieve 95% packetloss on a Linux host.
+# Script to achieve 95% packetloss on pinging a Linux host.
 # Might be useful to make some nice loss graphs for Smokeping :P
+# Only drops ICMP Ping traffic.
 
-exec "iptables -m statistic --mode random --probability 0.05 -j ACCEPT"
-exec "iptables -j DROP"
+exec "sudo iptables -A INPUT -p icmp --icmp-type echo-request -m statistic --mode random --probability 0.95 -j DROP"
